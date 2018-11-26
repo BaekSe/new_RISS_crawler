@@ -10,7 +10,7 @@ def convert_to_csv():
 
     for f in glob.glob('./journal_kr/*.xls'):
 
-        df = pd.read_excel(f)
+        df = pd.read_excel(f).T.reset_index().T.reset_index(drop=True)
         print(f, 'opened...')
 
         title = pd.Series() # 서명
@@ -36,14 +36,14 @@ def convert_to_csv():
                 check_KDC = False
                 check_ISBN = False
                 check_subj = False
+                cnt += 1
 
                 title.set_value(cnt, df.iloc[i][1])
-                cnt += 1
                 
             if df.iloc[i][0] == "저자":
                 author.set_value(cnt, df.iloc[i][1])
                 
-            if df.iloc[i][0] == "출판년":
+            if df.iloc[i][0] == "출판년" or df.iloc[i][0] == "발행년도":
                 published_year.set_value(cnt, df.iloc[i][1])
                 
             if df.iloc[i][0] == "발행사항":

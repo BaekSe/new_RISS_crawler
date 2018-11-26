@@ -10,7 +10,7 @@ def convert_to_csv():
 
     for f in glob.glob('./book/*.xls'):
 
-        df = pd.read_excel(f)
+        df = pd.read_excel(f).T.reset_index().T.reset_index(drop=True)
         print(f, 'opened...')
 
         title = pd.Series() # 제목
@@ -48,9 +48,9 @@ def convert_to_csv():
                 check_year = False
                 check_publisher = False
                 check_issues = False
+                cnt += 1
                 
                 title.set_value(cnt, df.iloc[i][1])
-                cnt += 1
                 
             if df.iloc[i][0] == "저자":
                 author.set_value(cnt, df.iloc[i][1])
@@ -77,7 +77,7 @@ def convert_to_csv():
             if not check_page:
                 page.set_value(cnt, None)
                 
-            if df.iloc[i][0] == "발행년도":
+            if df.iloc[i][0] == "발행년도" or df.iloc[i][0] == "출판년":
                 published_year.set_value(cnt, df.iloc[i][1])
                 check_year = True
             if not check_year:
