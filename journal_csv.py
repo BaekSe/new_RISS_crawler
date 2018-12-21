@@ -15,6 +15,7 @@ def convert_to_csv():
 
         title = pd.Series() # 서명
         author = pd.Series() # 저자
+        abstract = pd.Series() # 초록
         published_year = pd.Series() # 출판년
         publish_info = pd.Series() # 발행사항
         chapter = pd.Series() # 목차
@@ -23,6 +24,8 @@ def convert_to_csv():
         isbn = pd.Series() # ISBN
         subject = pd.Series() # 주제어
 
+        check_abs = False
+        check_abs_a = False
         check_chapter = False
         check_KDC = False
         check_ISBN = False
@@ -32,6 +35,8 @@ def convert_to_csv():
         for i in range(len(df)):
     
             if df.iloc[i][0] == "제목" or df.iloc[i][0] == "서명":
+                check_abs = False
+                check_abs_a = False
                 check_chapter = False
                 check_KDC = False
                 check_ISBN = False
@@ -42,6 +47,13 @@ def convert_to_csv():
                 
             if df.iloc[i][0] == "저자":
                 author.set_value(cnt, df.iloc[i][1])
+
+            if df.iloc[i][0] == "초록" and (not check_abs):
+                abstract.set_value(cnt, df.iloc[i][1])
+                check_abs = True
+                check_abs_a = True
+            if not check_abs_a:
+                abstract.set_value(cnt, None)
                 
             if df.iloc[i][0] == "출판년" or df.iloc[i][0] == "발행년도":
                 published_year.set_value(cnt, df.iloc[i][1])
@@ -78,6 +90,7 @@ def convert_to_csv():
 
         title = title.reset_index(drop=True)
         author = author.reset_index(drop=True)
+        abstract = abstract.reset_index(drop=True)
         published_year = published_year.reset_index(drop=True)
         publish_info = publish_info.reset_index(drop=True)
         chapter = chapter.reset_index(drop=True)
@@ -91,6 +104,7 @@ def convert_to_csv():
                     {
                         '서명': title,
                         '저자': author,
+                        '초록': abstract,
                         '발행년도': published_year,
                         '발행정보': publish_info,
                         '목차': chapter,
@@ -100,7 +114,7 @@ def convert_to_csv():
                         '주제어': subject
                     }
             ,
-            columns = ['서명', '저자', '발행년도', '발행정보', '목차', \
+            columns = ['서명', '저자', '초록', '발행년도', '발행정보', '목차', \
             '자료유형', 'KDC', 'ISBN', '주제어']
                     )
         print('df of ' + f + ' complete')

@@ -2,3 +2,4 @@
 *.pyc
 crawl_script/debug.log
 crawl_script/debug.log
+*.log

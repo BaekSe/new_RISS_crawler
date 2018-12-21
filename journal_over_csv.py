@@ -27,13 +27,23 @@ def convert_to_csv():
         issn = pd.Series() # ISSN
         subject = pd.Series() # 주제어
 
-        check_page = check_publisher = check_issues= check_issn = check_subject = False
+        check_page = False
+        check_publisher = False
+        check_issues = False
+        check_published_year = False
+        check_issn = False
+        check_subject = False
         cnt = 0
 
         for i in range(len(df)):
-    
+
             if df.iloc[i][0] == "제목" or df.iloc[i][0] == "서명":
-                check_page = check_publisher = check_issues= check_issn = check_subject = False
+                check_page = False
+                check_publisher = False
+                check_published_year = False
+                check_issues = False
+                check_issn = False 
+                check_subject = False
                 cnt += 1
 
                 title.set_value(cnt, df.iloc[i][1])
@@ -49,7 +59,7 @@ def convert_to_csv():
                 
             if df.iloc[i][0] == "수록면":
                 page.set_value(cnt, df.iloc[i][1])
-                page = True
+                check_page = True
             if not check_page:
                 page.set_value(cnt, None)
                 
