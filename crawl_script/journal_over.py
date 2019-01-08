@@ -7,7 +7,7 @@ def load_journal_over(driver, page, pageScale, keyword, StartCount):
 
     url = 'http://www.riss.kr/search/Search.do?detailSearch=false&viewYn=OP&query='
     url2 = '&iStartCount='
-    url3 = '&iGroupView=5&icate=re_a_over&colName=re_a_over&exQuery=&pageScale=500&strSort=RANK&order=%2FDESC&onHanja=false&keywordOption=0&searchGubun=true&p_year1=&p_year2=&dorg_storage=&mat_type=&mat_subtype=&fulltext_kind=&t_gubun=&learning_type=&language_code=&ccl_code=&language=&inside_outside=&fric_yn=&image_yn=&regnm=&gubun=&kdc=&resultSearch=false&listFlag=&h_groupByField='
+    url3 = '&iGroupView=5&icate=re_a_over&colName=re_a_over&exQuery=&pageScale=100&strSort=RANK&order=%2FDESC&onHanja=false&keywordOption=0&searchGubun=true&p_year1=&p_year2=&dorg_storage=&mat_type=&mat_subtype=&fulltext_kind=&t_gubun=&learning_type=&language_code=&ccl_code=&language=&inside_outside=&fric_yn=&image_yn=&regnm=&gubun=&kdc=&resultSearch=false&listFlag=&h_groupByField='
     full_url = url + keyword + url2 + str(StartCount + page * pageScale) + url3
     driver.get(full_url)
 
@@ -59,9 +59,9 @@ if __name__ == '__main__':
         StartCount = int(F.readline())
     except:
         StartCount = 0
-    pageScale = 500
+    pageScale = 100
 
-    driver.get('http://www.riss.kr/search/Search.do?detailSearch=false&viewYn=OP&query='+keyword+'&iStartCount='+str(StartCount) + '&iGroupView=5&icate=re_a_over&colName=re_a_over&exQuery=&pageScale=500&strSort=RANK&order=%2FDESC&onHanja=false&keywordOption=0&searchGubun=true&p_year1=&p_year2=&dorg_storage=&mat_type=&mat_subtype=&fulltext_kind=&t_gubun=&learning_type=&language_code=&ccl_code=&language=&inside_outside=&fric_yn=&image_yn=&regnm=&gubun=&kdc=&resultSearch=false&listFlag=&h_groupByField=')
+    driver.get('http://www.riss.kr/search/Search.do?detailSearch=false&viewYn=OP&query='+keyword+'&iStartCount='+str(StartCount) + '&iGroupView=5&icate=re_a_over&colName=re_a_over&exQuery=&pageScale=100&strSort=RANK&order=%2FDESC&onHanja=false&keywordOption=0&searchGubun=true&p_year1=&p_year2=&dorg_storage=&mat_type=&mat_subtype=&fulltext_kind=&t_gubun=&learning_type=&language_code=&ccl_code=&language=&inside_outside=&fric_yn=&image_yn=&regnm=&gubun=&kdc=&resultSearch=false&listFlag=&h_groupByField=')
     results = driver.find_element_by_xpath('/html/body/div[1]/div[4]/div[2]/div[3]/form/div[1]/div/div/ul/li/span[2]').text
     
     results = int(''.join(re.findall('\\d', results))) - StartCount
