@@ -15,10 +15,10 @@ df_start = str()
 df_end = str()
 df_cnt = 1
 
-if not os.path.exists('csv/journal_csv'):
-        os.mkdir('csv/journal_csv')
+if not os.path.exists('csv/journal_kr_csv'):
+        os.mkdir('csv/journal_kr_csv')
 
-for f in glob.glob('./journal/*.xls'):
+for f in glob.glob('./journal_kr/*.xls'):
 
     df = pd.read_excel(f).T.reset_index().T.reset_index(drop=True)
     print(f, 'opened...')
@@ -133,10 +133,10 @@ for f in glob.glob('./journal/*.xls'):
 
     if df_cnt % 100 == 1:
         df_start = re.findall("\d+", str(f))[0]
-    if (df_cnt % 100 == 0) or (f == glob.glob('./journal/*.xls')[-1]):
+    if (df_cnt % 100 == 0) or (f == glob.glob('./journal_kr/*.xls')[-1]):
         df_end = re.findall("\d+", str(f))[0]
-        pd.concat(df_list).to_csv('csv/journal_csv/journal_' + df_start + '-' + df_end + '.csv', sep=',')
-        print('journal_' + df_start + '-' + df_end + '.csv saved')
+        pd.concat(df_list).to_csv('csv/journal_kr_csv/journal_kr_' + df_start + '-' + df_end + '.csv', sep=',')
+        print('journal_kr_' + df_start + '-' + df_end + '.csv saved')
         df_list = []
     df_cnt += 1
 
